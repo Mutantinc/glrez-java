@@ -30,7 +30,7 @@ After cloning the souce code from github you may also import the project in Ecli
 Though, probably no Maven repository contains the necessary external libs, so you will have to install them yourself.
 Also, in JavaWabStart mode, the glrez jar will need to be signed, and all the jars it uses at runtime too. JOGL, JOAL and NativeFmodEx are already signed. IBXM is not.
 
-Using portecle, https://portecle.sourceforge.net, create yourself a keystore.
+Using portecle for example, https://portecle.sourceforge.net, create yourself a keystore.
 Then generate a key pair into it with the CN=ibxm and alias=ibxm and give it a password
 Then generate a key pair into it with the CN=glrez and alias=glrez and give it a password
 
@@ -67,13 +67,20 @@ Upload glrez.jnlp, the glrez jar, ibxm.jnlp and the *signed* ibxm jar into the s
 
 Run as a standalone application:
 --------------------------------
-You need a JRE6 at least to run GLRez.
-As standalone, launch glrez.sh on a Unix platform or glrez.bat on a Windows platform.
-As a JavaWebStart application, call the previously glrez.jnlp from a browser.
+You need a JRE6 at least to run GLRez: http://www.oracle.com/technetwork/java/javase/downloads/
+If using OpenAL under Windows or MacOS, you may also have to install the OpenAL lib: the OpenAL library from http://connect.creativelabs.com/openal/
+
+- As a standalone app, launch:
+    On Unix: glrez.sh or java -jar glrez-1.0.jar
+    On Windows: blrez.bat or javaw.exe -Dsun.java2d.noddraw=true -jar glrez-1.0.jar
+
+- As a JavaWebStart application, call the aforementioned glrez.jnlp from a browser.
+
+In either case, under Windows, don't forget the VM option -Dsun.java2d.noddraw=true else DirectDraw will mess with OpenGL and the display will remain black in fullscreen.
+
 
 Keys:
-- F1: switch between full screen and windowed mode
-- Space: pause/resume
-- F: write framerate to the standard output
-- Escape: exit  
- 
+  F1: switch between full screen and windowed mode
+  Space: pause/resume
+  F: write framerate to the standard output
+  Escape: exit  
