@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<jnlp spec="1.0+" codebase="http://www.suntriprecords.com/" href="temp/ibxm.jnlp">
+    <information>
+        <title>IBXM</title>
+        <vendor>Martin Cameron</vendor>
+        <homepage href="https://sites.google.com/site/mumart/"/>
+        <description>IBXM is a Java replay for ProTracker MOD, Scream Tracker 3 S3M, and FastTracker 2 XM files.</description>
+        <offline-allowed/>
+    </information>
+
+    <security>
+        <all-permissions/>
+    </security>
+
+    <resources>
+		<j2se version="1.6+"/>
+		<jar href="temp/ibxm-a61-signed.jar" main="true"/>
+    </resources>
+    
+    <component-desc />
+</jnlp>
