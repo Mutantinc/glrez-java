@@ -55,6 +55,10 @@ public class OptionsDialog extends JDialog {
 
 
   public OptionsDialog(DisplayModeChoiceListener displayModeChoiceListener) {
+    this(true, true, true, displayModeChoiceListener);
+  }
+
+  public OptionsDialog(boolean allowModes, boolean allowFullScreen, boolean allowSound, DisplayModeChoiceListener displayModeChoiceListener) {
     setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
     setTitle("Please choose a display mode");
     
@@ -147,12 +151,28 @@ public class OptionsDialog extends JDialog {
     
     displayModeInfo.addChoiceListener(displayModeChoiceListener);
     displayModeInfo.addSelectionListener(displayModesComboBox);
-    boolean fullScreen = displayModeInfo.isFullScreenSupported();
-    displayModesComboBox.selectDefaultModes(fullScreen); //this triggers the listeners above, so keep it under.
+    boolean fullScreen = allowFullScreen && displayModeInfo.isFullScreenSupported();
+    
+    if(allowModes) {
+      displayModesComboBox.selectDefaultModes(fullScreen); //this triggers the listeners above, so keep it under.
+    }
+    else {
+      displayModesComboBox.setEnabled(false);
+    }
     fullScreenCheckBox.setSelected(fullScreen);
     fullScreenCheckBox.setEnabled(fullScreen);
     
-    fmodButton.setSelected(true);
+    if(allowSound) {
+      if(System.getProperty("os.name").toLowerCase().startsWith("windows")) {
+        fmodButton.setSelected(true);
+      }
+      else {
+        openAlButton.setSelected(true);
+      }
+    }
+    fmodButton.setEnabled(allowSound);
+    openAlButton.setEnabled(allowSound);
+    
     setResizable(false);
   }
 
