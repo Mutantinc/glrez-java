@@ -39,8 +39,15 @@ public final class Launcher extends Thread implements DisplayModeChoiceListener 
       fi.setIcon(Resources.readIcon());
       
       ModulePlayer mp = options.isFmodSelected() ? new FmodPlayer() : new JoalPlayer();
-      GLRezFrame glRez = new GLRezFrame(fi, mp);
-      new Thread(glRez).start();
+      
+      try {
+        GLRezFrame glRez = new GLRezFrame();
+        glRez.initGraphAndSound(fi, mp);
+        new Thread(glRez).start();
+      }
+      catch(Exception e) {
+        throw new RuntimeException(e);
+      }
     }
   }
 

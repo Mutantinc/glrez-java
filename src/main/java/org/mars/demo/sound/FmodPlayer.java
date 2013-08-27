@@ -45,7 +45,7 @@ public class FmodPlayer implements ModulePlayer {
   private Channel channel;
 
   private boolean paused;
-
+  private boolean initialized;
   
   @Override
   public void init() throws Exception {
@@ -58,12 +58,17 @@ public class FmodPlayer implements ModulePlayer {
       checkError(result, "Fmod System creation");
     
       system.init(32, FMOD_INIT_NORMAL, null);
+      initialized = true;
     }
     catch (Exception e) {
       throw new RuntimeException(e);
     }
   }
 
+  @Override
+  public boolean isInitialized() {
+    return initialized;
+  }
   
   @Override
   public void load(URL url) {
@@ -119,6 +124,8 @@ public class FmodPlayer implements ModulePlayer {
       result = system.release();
       checkError(result, "system release");
     }
+    
+    initialized = false;
   }
 
   @Override

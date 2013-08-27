@@ -46,6 +46,7 @@ public class JoalPlayer implements ModulePlayer {
   private IBXM ibxm;
 
   private boolean paused;
+  private boolean initialized;
 
   
   @Override
@@ -65,13 +66,19 @@ public class JoalPlayer implements ModulePlayer {
       // Generate buffers
       al.alGenBuffers(NUM_SOUND_BUFFERS, buffers, 0);
       checkError("Error generating OpenAL buffers");
+      
+      initialized = true;
     }
     catch(ExceptionInInitializerError e) {
       throw new RuntimeException("OpenAL lib isn't installed.\nGet it at http://connect.creativelabs.com/openal/", e);
     }
   }
 
-  
+  @Override
+  public boolean isInitialized() {
+    return initialized;
+  }
+
   @Override
   public void load(URL url) {
     Module module = loadModule(url);
@@ -127,6 +134,7 @@ public class JoalPlayer implements ModulePlayer {
       al.alDeleteBuffers(buffers.length, buffers, 0);
       al.alDeleteSources(1, new int[]{source}, 0);
       ALut.alutExit();
+      initialized = false;
     }
   }
 

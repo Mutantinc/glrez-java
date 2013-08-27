@@ -16,7 +16,6 @@ package com.chiptune.glrez;
 import org.mars.demo.graph.GLDrawableHolder;
 import org.mars.toolkit.realtime.graph.DrawableHolder;
 import org.mars.toolkit.realtime.graph.FrameInfo;
-import org.mars.toolkit.realtime.sound.ModulePlayer;
 
 public class GLRezApplet extends GLRezHeadless {
 
@@ -24,10 +23,6 @@ public class GLRezApplet extends GLRezHeadless {
   
   public GLRezApplet() {
     super();
-  }
-
-  public GLRezApplet(FrameInfo fi, ModulePlayer mp) {
-    super(fi, mp);
   }
 
   /**

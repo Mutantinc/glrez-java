@@ -25,6 +25,7 @@ public abstract class GLRezHeadless extends GLDemo implements Runnable {
 
   private TickTimer tickTimer;
   private ModulePlayer modPlayer;
+  private boolean soundInitialized;
   private Scene scene;
   private boolean firstDraw = true; //Sometimes the module has played more than one row before the display kicks-in, so this fixes display errors on the first effect
 
@@ -40,60 +41,36 @@ public abstract class GLRezHeadless extends GLDemo implements Runnable {
   //private float m_r; // repeat ratio (unused in the C version)
 
   public GLRezHeadless() {
-    // nothing
-  }
-  
-  public GLRezHeadless(FrameInfo fi, ModulePlayer mp) {
-    init(fi, mp);
-  }
-  
-  /**
-   * OpenGL setup post-drawable creation
-   * Will be called upon windowed/full screen switch and the GL instance might have changed,
-   * so all must be regenerated. 
-   */
-  @Override
-  protected void initGraph() throws Exception
-  {
-    gl.glShadeModel(GLLightingFunc.GL_SMOOTH); // enable smooth shading
-    gl.glClearDepth(1.0f); // set depth buffer
-    gl.glEnable(GL.GL_DEPTH_TEST); // enable depth testing
-    gl.glDepthFunc(GL.GL_LEQUAL); // depth testing mode
-    gl.glHint(GL2ES1.GL_PERSPECTIVE_CORRECTION_HINT, GL.GL_NICEST); // perspective calculations mode
-    gl.glTexGeni(GL2.GL_S, GL2ES1.GL_TEXTURE_GEN_MODE, GL2.GL_SPHERE_MAP);// set mode S to sphere mapping
-    gl.glTexGeni(GL2.GL_T, GL2ES1.GL_TEXTURE_GEN_MODE, GL2.GL_SPHERE_MAP);// set mode T to sphere mapping
-    gl.glLineWidth(1.0f); // set line width
-    
-    // and reinit all the rest because the GL might have changed
-    if(scene == null) {
-      scene = new Scene(this);
-    }
-    scene.init();
-  }
-
-  @Override
-  protected void disposeGraph() throws Exception {
-    scene.clear();
-  }
-
-  
-  public void init(FrameInfo fi, ModulePlayer mp) {
     tickTimer = new TickTimer(getTimer());
+  }
+  
+  public final void initGraphAndSound(FrameInfo fi, ModulePlayer mp) throws Exception {
+    initGraph(fi);
+    initSound(mp);
+  }
+
+  public void initSound(ModulePlayer mp) throws Exception {
     modPlayer = mp;
-    init(fi);
+    initSound();
   }
-  
-  protected boolean isSoundEnabled() {
-    return SNG && (modPlayer != null);
-  }
-  
+
   @Override
   protected void initSound() throws Exception{
     if(isSoundEnabled()) {
       modPlayer.init();
     }
+    soundInitialized = true;
   }
-  
+
+  protected boolean isSoundEnabled() {
+    return SNG && (modPlayer != null);
+  }
+
+  @Override
+  protected boolean isSoundInitialized() {
+    return soundInitialized;
+  }
+
   @Override
   protected void loadSound() {
     if(isSoundEnabled()) {
@@ -129,6 +106,37 @@ public abstract class GLRezHeadless extends GLDemo implements Runnable {
     }
   }
 
+  
+  /**
+   * OpenGL setup post-drawable creation
+   * Will be called upon windowed/full screen switch and the GL instance might have changed,
+   * so all must be regenerated. 
+   */
+  @Override
+  protected void drawableIntialized() throws Exception
+  {
+    gl.glShadeModel(GLLightingFunc.GL_SMOOTH); // enable smooth shading
+    gl.glClearDepth(1.0f); // set depth buffer
+    gl.glEnable(GL.GL_DEPTH_TEST); // enable depth testing
+    gl.glDepthFunc(GL.GL_LEQUAL); // depth testing mode
+    gl.glHint(GL2ES1.GL_PERSPECTIVE_CORRECTION_HINT, GL.GL_NICEST); // perspective calculations mode
+    gl.glTexGeni(GL2.GL_S, GL2ES1.GL_TEXTURE_GEN_MODE, GL2.GL_SPHERE_MAP);// set mode S to sphere mapping
+    gl.glTexGeni(GL2.GL_T, GL2ES1.GL_TEXTURE_GEN_MODE, GL2.GL_SPHERE_MAP);// set mode T to sphere mapping
+    gl.glLineWidth(1.0f); // set line width
+    
+    // and reinit all the rest because the GL might have changed
+    if(scene == null) {
+      scene = new Scene(this);
+    }
+    scene.init();
+  }
+
+  @Override
+  protected void drawableDisposed() throws Exception {
+    scene.clear();
+  }
+
+  
   @Override
   protected void drawGLScene() {
     float t_g = tickTimer.getTime();

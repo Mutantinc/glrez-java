@@ -28,10 +28,6 @@ public class GLRezFrame extends GLRezHeadless {
     super();
   }
 
-  public GLRezFrame(FrameInfo fi, ModulePlayer mp) {
-    super(fi, mp);
-  }
-
   @Override
   protected DrawableHolder openWindow(FrameInfo fi) throws Exception {
     return GLFrame.openWindow(fi, this, this);
@@ -41,7 +37,10 @@ public class GLRezFrame extends GLRezHeadless {
     try {
       FrameInfo fi = new FrameInfo.Windowed("GLREZ", Resources.readIcon(), 800, 600, false);
       ModulePlayer mp = new FmodPlayer();      
-      new GLRezFrame(fi, mp).start();
+      GLRezFrame glRez = new GLRezFrame();
+      glRez.initGraph(fi);
+      glRez.initSound(mp);
+      glRez.start();
     }
     catch (Throwable t) {
       t.printStackTrace();

@@ -73,56 +73,7 @@ public abstract class GLDemo extends GLBase implements GLEventListener, WindowLi
   }
 
   // ==============================================================================
-
-  public void init() {
-    init(new FrameInfo.Windowed(null, null, 640, 480, false));
-  }
-
-  public final void init(FrameInfo fi) {
-    init(fi, false);
-  }
-
-  public final void init(FrameInfo fi, boolean askForFullScreen) {
-    if(!isInitialized()) {
-      // Thread.currentThread().setPriority(Thread.MIN_PRIORITY);
   
-      if (fi != null) {
-        boolean canMaximize = Toolkit.getDefaultToolkit().isFrameStateSupported(Frame.MAXIMIZED_BOTH);
-        if (!canMaximize) {
-          fi.setFullScreen(false);
-        }
-        else if (askForFullScreen) {
-          int answer = JOptionPane.showOptionDialog(null, "Run in fullscreen mode ?", "Question", JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE, null, null, null);
-          if (answer == JOptionPane.YES_OPTION) {
-            fi.setFullScreen(true);
-          }
-          else if (answer == JOptionPane.NO_OPTION) {
-            fi.setFullScreen(false);
-          }
-          else {
-            return;
-          }
-        }
-      }
-
-      try {
-        drawableHolder = openWindow(fi);
-        initSound();
-        setInitialized();
-      }
-      catch(Exception e) {
-        setInterrupted();
-        active = false;
-        closeWindow();
-        disposeSound();
-        throw new RuntimeException(e);
-      }
-    }
-    else {
-      throw new RuntimeException("Already initialized!");
-    }
-  }
-
   public final void start() {
     if (isInitialized() && !isInterrupted()) {
       loadSound();
@@ -142,6 +93,13 @@ public abstract class GLDemo extends GLBase implements GLEventListener, WindowLi
     active = false;
     disposeSound();
     closeWindow();
+  }
+
+  public final void stop() {
+    setInterrupted();
+    active = false;
+    closeWindow();
+    disposeSound();
   }
 
   public final synchronized void pause() {
@@ -191,9 +149,53 @@ public abstract class GLDemo extends GLBase implements GLEventListener, WindowLi
     }
   }
 
+  @Override
+  public boolean isInitialized() {
+    return isGraphInitialized() && isSoundInitialized();
+  }
+
+  public void initGraph() throws Exception {
+    initGraph(new FrameInfo.Windowed(null, null, 640, 480, false));
+  }
+
+  public final void initGraph(FrameInfo fi) throws Exception {
+    initGraph(fi, false);
+  }
+
+  public final void initGraph(FrameInfo fi, boolean askForFullScreen) throws Exception {
+    // Thread.currentThread().setPriority(Thread.MIN_PRIORITY);
+
+    if (fi != null) {
+      boolean canMaximize = Toolkit.getDefaultToolkit().isFrameStateSupported(Frame.MAXIMIZED_BOTH);
+      if (!canMaximize) {
+        fi.setFullScreen(false);
+      }
+      else if (askForFullScreen) {
+        int answer = JOptionPane.showOptionDialog(null, "Run in fullscreen mode ?", "Question", JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE, null, null, null);
+        if (answer == JOptionPane.YES_OPTION) {
+          fi.setFullScreen(true);
+        }
+        else if (answer == JOptionPane.NO_OPTION) {
+          fi.setFullScreen(false);
+        }
+        else {
+          return;
+        }
+      }
+    }
+
+    drawableHolder = openWindow(fi);
+  }
+
+  protected boolean isGraphInitialized() {
+    return (drawableHolder != null);
+  }
+
   protected abstract void drawGLScene();
 
   protected abstract void reshapeGL();
+
+  protected abstract boolean isSoundInitialized();
 
   protected abstract void initSound() throws Exception;
 
@@ -219,7 +221,7 @@ public abstract class GLDemo extends GLBase implements GLEventListener, WindowLi
       gl = (GL2) drawable.getGL();
       glu = new GLUgl2();
 
-      initGraph();
+      drawableIntialized();
     }
     catch (Exception e) {
       e.printStackTrace();
@@ -283,7 +285,7 @@ public abstract class GLDemo extends GLBase implements GLEventListener, WindowLi
   @Override
   public void dispose(GLAutoDrawable glAutoDrawable) {
     try {
-      disposeGraph();
+      drawableDisposed();
     }
     catch (Exception e) {
       e.printStackTrace();

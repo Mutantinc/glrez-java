@@ -11,7 +11,9 @@ import java.net.URL;
 
 public interface ModulePlayer {
 
+  public boolean isInitialized();
   public void init() throws Exception;
+  
   public void load(URL url);
 
   public void start();

@@ -15,19 +15,12 @@ public abstract class GLBase {
   protected GL2 gl;
   protected GLUgl2 glu;
 
-  private boolean initialized;
   private boolean interrupted;
 
-  protected abstract void initGraph() throws Exception;
-  protected abstract void disposeGraph() throws Exception;
+  protected abstract void drawableIntialized() throws Exception;
+  protected abstract void drawableDisposed() throws Exception;
 
-  public final boolean isInitialized() {
-    return initialized;
-  }
-
-  public final void setInitialized() {
-    initialized = true;
-  }
+  public abstract boolean isInitialized();
 
   public final boolean isInterrupted() {
     return interrupted;

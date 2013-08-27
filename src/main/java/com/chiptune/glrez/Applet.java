@@ -19,10 +19,16 @@ public class Applet extends java.applet.Applet {
     Dimension appletSize = getSize();
     FrameInfo fi = new FrameInfo.Windowed(null, null,  appletSize);
     ModulePlayer mp = new FmodPlayer();
-    glRez = new GLRezApplet(fi, mp);
     
-    setLayout( new BorderLayout());
-    add(glRez.getDrawableHolder().getDrawable(), BorderLayout.CENTER);
+    try {
+      setLayout( new BorderLayout());
+      glRez = new GLRezApplet();
+      glRez.initGraphAndSound(fi, mp);
+      add(glRez.getDrawableHolder().getDrawable(), BorderLayout.CENTER);
+    }
+    catch(Exception e) {
+      throw new RuntimeException(e);
+    }
   }
 
   /**
