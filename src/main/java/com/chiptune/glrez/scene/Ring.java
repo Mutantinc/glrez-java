@@ -14,6 +14,7 @@
 package com.chiptune.glrez.scene;
 
 import javax.media.opengl.GL2;
+import javax.media.opengl.GL2GL3;
 
 import org.mars.demo.graph.GLDemo;
 
@@ -38,7 +39,7 @@ public class Ring extends Geometry {
     r_d6 = gl.glGenLists(1);
     gl.glNewList(r_d6, GL2.GL_COMPILE);
     for (int i = 0; i < 360; i += 5) {
-      gl.glBegin(GL2.GL_QUADS);
+      gl.glBegin(GL2GL3.GL_QUADS);
       
       d = max;
       gl.glColor3f(0.0f, 0.0f, 0.0f);

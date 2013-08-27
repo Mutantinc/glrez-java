@@ -2,7 +2,7 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>com.chiptune</groupId>
   <artifactId>glrez</artifactId>
-  <version>1.0</version>
+  <version>1.0.1</version>
   
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -48,7 +48,7 @@
           </execution>
         </executions>
         <configuration>
-          <keystore>C:/users/mars/keystore.jks</keystore>
+          <keystore>C:/users/mars/.ssh/glrez.jks</keystore>
           <alias>glrez</alias>
           <storepass>dtc</storepass>
           <keypass>dtc</keypass>
@@ -62,34 +62,34 @@
   	<dependency>
   		<groupId>com.jogamp</groupId>
   		<artifactId>gluegen-rt</artifactId>
-  		<version>2.0-20120502</version>
+  		<version>2.0.2</version>
   	</dependency>
   	<dependency>
   		<groupId>com.jogamp</groupId>
-  		<artifactId>gluegen-rt-natives</artifactId>
-  		<version>windows-i586</version>
+  		<artifactId>gluegen-rt-natives-windows-amd64</artifactId>
+  		<version>2.0.2</version>
   		<scope>runtime</scope>
   	</dependency>
   	<dependency>
   		<groupId>com.jogamp</groupId>
-  		<artifactId>jogl.all</artifactId>
-  		<version>2.0-20120502</version>
+  		<artifactId>jogl-all</artifactId>
+  		<version>2.0.2</version>
   	</dependency>
   	<dependency>
   		<groupId>com.jogamp</groupId>
-  		<artifactId>jogl-all-natives</artifactId>
-  		<version>windows-i586</version>
+  		<artifactId>jogl-all-natives-windows-amd64</artifactId>
+  		<version>2.0.2</version>
   		<scope>runtime</scope>
   	</dependency>
   	<dependency>
   		<groupId>com.jogamp</groupId>
   		<artifactId>joal</artifactId>
-  		<version>2.0-20120502</version>
+  		<version>2.0.2</version>
   	</dependency>
   	<dependency>
   		<groupId>com.jogamp</groupId>
-  		<artifactId>joal-natives</artifactId>
-  		<version>windows-i586</version>
+  		<artifactId>joal-natives-windows-amd64</artifactId>
+  		<version>2.0.2</version>
   		<scope>runtime</scope>
   	</dependency>
   	<dependency>
@@ -104,7 +104,7 @@
   	</dependency>
   	<dependency>
   		<groupId>org.jouvieje</groupId>
-  		<artifactId>nativefmodex-win</artifactId>
+  		<artifactId>nativefmodex-win64</artifactId>
   		<version>1.5.0</version>
   		<scope>runtime</scope>
   	</dependency>

@@ -1,4 +1,3 @@
-/*
 /**
 * Copyright 2005-2012 <a href="mailto:fabmars@gmail.com">Fabien Marsaud</a> and <a href="mailto:rez@chiptune.com">Christophe Résigné</a>
 * 
@@ -14,37 +13,39 @@
 */
 package com.chiptune.glrez;
 
+import org.mars.demo.graph.GLFrame;
 import org.mars.demo.sound.FmodPlayer;
-import org.mars.demo.sound.JoalPlayer;
-import org.mars.toolkit.display.DisplayModeChoiceListener;
+import org.mars.toolkit.realtime.graph.DrawableHolder;
 import org.mars.toolkit.realtime.graph.FrameInfo;
 import org.mars.toolkit.realtime.sound.ModulePlayer;
 
 import com.chiptune.glrez.data.Resources;
 
 
-public final class Launcher extends Thread implements DisplayModeChoiceListener {
+public class GLRezFrame extends GLRezHeadless {
 
-  private final OptionsDialog options;
-  
-  protected Launcher() {
-    options = new OptionsDialog(this);
-    options.setVisible(true);
+  public GLRezFrame() {
+    super();
   }
-  
+
+  public GLRezFrame(FrameInfo fi, ModulePlayer mp) {
+    super(fi, mp);
+  }
+
   @Override
-  public void displayModeChosen(final FrameInfo fi) {
-    if(fi != null) {
-      fi.setTitle("GLREZ");
-      fi.setIcon(Resources.readIcon());
-      
-      ModulePlayer mp = options.isFmodSelected() ? new FmodPlayer() : new JoalPlayer();
-      GLRezFrame glRez = new GLRezFrame(fi, mp);
-      new Thread(glRez).start();
-    }
+  protected DrawableHolder openWindow(FrameInfo fi) throws Exception {
+    return GLFrame.openWindow(fi, this, this);
   }
 
   public static void main(String... args) {
-    new Launcher();
+    try {
+      FrameInfo fi = new FrameInfo.Windowed("GLREZ", Resources.readIcon(), 800, 600, false);
+      ModulePlayer mp = new FmodPlayer();      
+      new GLRezFrame(fi, mp).start();
+    }
+    catch (Throwable t) {
+      t.printStackTrace();
+    }    
   }
 }
+//Rez' asshole is here

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<jnlp spec="1.0+" codebase="http://www.suntriprecords.com/" href="temp/ibxm.jnlp">
+<jnlp spec="1.0+" codebase="http://www.chiptune.com/glrez/" href="ibxm.jnlp">
     <information>
         <title>IBXM</title>
         <vendor>Martin Cameron</vendor>
@@ -14,7 +14,7 @@
 
     <resources>
 		<j2se version="1.6+"/>
-		<jar href="temp/ibxm-a61-signed.jar" main="true"/>
+		<jar href="ibxm-a61-signed.jar"/>
     </resources>
     
     <component-desc />

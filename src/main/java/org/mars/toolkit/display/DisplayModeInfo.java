@@ -85,6 +85,9 @@ public final class DisplayModeInfo {
     }
   }
 
+  /**
+   * Caution: it will return false in a sandboxed mode (eg. Applet running without all persmissions)
+   */
   public boolean isFullScreenSupported() {
     if (graphicsDevice != null) {
       return graphicsDevice.isFullScreenSupported();
@@ -151,6 +154,9 @@ public final class DisplayModeInfo {
     }
   }
 
+  /**
+   * Caution: fullScreenSelected will remain false if the graphicsDevice doesn't support fullscreen.
+   */
   public void setFullScreenSelected(boolean fullScreen) {
     boolean oldSelection = fullScreenSelected;
     fullScreenSelected = fullScreen && isFullScreenSupported();

@@ -17,6 +17,7 @@ The result is a 100kB JAR archive.
 
 http://jogamp.org/jogl/www/  
 http://jogamp.org/joal/www/
+http://jogamp.org/applet-launcher/www/
 https://sites.google.com/site/mumart/
 http://jerome.jouvie.free.fr/nativefmodex/
 
@@ -30,25 +31,30 @@ After cloning the souce code from github you may also import the project in Ecli
 Though, probably no Maven repository contains the necessary external libs, so you will have to install them yourself.
 Also, in JavaWabStart mode, the glrez jar will need to be signed, and all the jars it uses at runtime too. JOGL, JOAL and NativeFmodEx are already signed. IBXM is not.
 
-Using portecle for example, https://portecle.sourceforge.net, create yourself a keystore.
+Using portecle for example, http://portecle.sourceforge.net, create yourself a keystore.
 Then generate a key pair into it with the CN=ibxm and alias=ibxm and give it a password
 Then generate a key pair into it with the CN=glrez and alias=glrez and give it a password
 
 
 On http://code.google.com/p/micromod/ get the latest distrib of IBXM (e.g ibxm-a61.jar)
-Sign it using: jarsigner -keystore /home/myaccount/keystore.jks -storepass mystorepass -keypass mykeypass /home/mars/ibxm-a61.jar ibxm
+Sign it using: jarsigner -keystore /home/myaccount/keystore.jks -storepass mystorepass -keypass mykeypass /home/myaccount/ibxm-a61.jar ibxm
  
 
-On http://jogamp.org/deployment/jogamp-current/archive/ get the latest distrib jogamp-all-platforms.7z and extract jogl.all.jar, gluegen-rt.jar and joal.jar 
-	mvn install:install-file -Dfile=/home/myaccount/jogl.all.jar -DgroupId=com.jogamp -DartifactId=jogl.all -Dversion=2.0-20120502 -Dpackaging=jar
-	mvn install:install-file -Dfile=/home/myaccount/gluegen-rt.jar -DgroupId=com.jogamp -DartifactId=gluegen-rt.all -Dversion=2.0-20120502 -Dpackaging=jar
-	mvn install:install-file -Dfile=/home/myaccount/joal.jar -DgroupId=com.jogamp -DartifactId=joal -Dversion=2.0-20120502 -Dpackaging=jar
+On http://jogamp.org/deployment/jogamp-current/archive/ get the latest distrib jogamp-all-platforms.7z and extract jogl.all.jar, gluegen-rt.jar and joal.jar and the natives related to your machine (here: amd64)
+	mvn install:install-file -Dfile=/home/myaccount/jogl-all.jar -DgroupId=com.jogamp -DartifactId=jogl-all -Dversion=2.0.2 -Dpackaging=jar
+	mvn install:install-file -Dfile=/home/myaccount/jogl-all-natives-windows-amd64.jar -DgroupId=com.jogamp -DartifactId=jogl-all-natives-windows-amd64 -Dversion=2.0.2 -Dpackaging=jar
+	mvn install:install-file -Dfile=/home/myaccount/gluegen-rt.jar -DgroupId=com.jogamp -DartifactId=gluegen-rt -Dversion=2.0.2 -Dpackaging=jar
+	mvn install:install-file -Dfile=/home/myaccount/gluegen-rt-natives-windows-amd64.jar -DgroupId=com.jogamp -DartifactId=gluegen-rt-natives-windows-amd64 -Dversion=2.0.2 -Dpackaging=jar
+	mvn install:install-file -Dfile=/home/myaccount/joal.jar -DgroupId=com.jogamp -DartifactId=joal -Dversion=2.0.2 -Dpackaging=jar
+	mvn install:install-file -Dfile=/home/myaccount/joal-natives-windows-amd64.jar -DgroupId=com.jogamp -DartifactId=joal-natives-windows-amd64 -Dversion=2.0.2 -Dpackaging=jar
+Adjust pom.xml according to the natives you chose
 
-On http://jerome.jouvie.free.fr/nativefmodex/ get the latest distrib (e.g the distrib NativeFmodEx-1.5.0-jws.rar) and extract NativeFmodEx.jar 
-mvn install:install-file -Dfile=/home/myaccount/NativeFmodEx.jar -DgroupId=org.jouvieje -DartifactId=nativefmodex -Dversion=1.5.0 -Dpackaging=jar
+On http://jerome.jouvie.free.fr/nativefmodex/ get the latest distrib (e.g the distrib NativeFmodEx-1.5.0-jws.rar) and extract NativeFmodEx.jar and the NativeFmodEx-*.jar related to your system (here: win64)
+	mvn install:install-file -Dfile=/home/myaccount/NativeFmodEx.jar -DgroupId=org.jouvieje -DartifactId=nativefmodex -Dversion=1.5.0 -Dpackaging=jar
+	mvn install:install-file -Dfile=/home/myaccount/NativeFmodEx-win64.jar -DgroupId=org.jouvieje -DartifactId=nativefmodex-win64 -Dversion=1.5.0 -Dpackaging=jar
 
-And do the same with the ibxm jar (signed or not)
-mvn install:install-file -Dfile=/home/myaccount/ibxm-a61.jar -DgroupId=ibxm -DartifactId=ibxm -Dversion=a61-signed -Dpackaging=jar
+And do the same with the ibxm jar (signed or not; here we're using a specific version name as we're using the signed one)
+	mvn install:install-file -Dfile=/home/myaccount/ibxm-a61.jar -DgroupId=ibxm -DartifactId=ibxm -Dversion=a61-signed -Dpackaging=jar
 
 Then update this project's pom.xml with the keystore location+password, and glrez-aliased keypair password
 Build the project: mvn clean package. 
@@ -64,23 +70,31 @@ Update glrez.jnlp codebase, href, jar href, and ibxm extention to reflect the lo
 Update ibxm.jnlp codebase, href, jar href, and ibxm extention to reflect the location you're going to install in.
 Upload glrez.jnlp, the glrez jar, ibxm.jnlp and the *signed* ibxm jar into the same remote folder.
 
+For Applet,
+Update glrez-applet.jnlp similarly.
+Upload applet-launcher.jar, glrez.html, glrez-aplet.jnlp, the glrez jar, ibxm.jnlp and the *signed* ibxm jar into the same remote folder.
 
-Run as a standalone application:
---------------------------------
+
+Run as a standalone or web app, or applet:
+------------------------------------------
 You need a JRE6 at least to run GLRez: http://www.oracle.com/technetwork/java/javase/downloads/
 If using OpenAL under Windows or MacOS, you may also have to install the OpenAL lib: the OpenAL library from http://connect.creativelabs.com/openal/
 
 - As a standalone app, launch:
     On Unix: glrez.sh or java -jar glrez-1.0.jar
-    On Windows: blrez.bat or javaw.exe -Dsun.java2d.noddraw=true -jar glrez-1.0.jar
+    On Windows: glrez.bat or javaw.exe -Dsun.java2d.noddraw=true -jar glrez-1.0.jar
+    The jar manifest contains the main class (org.chiptune.glrez.Launcher) so it's unneeded in the command.
 
 - As a JavaWebStart application, call the aforementioned glrez.jnlp from a browser.
 
+- As an applet, call the aforementioned glrez.html from a browser.
+
 In either case, under Windows, don't forget the VM option -Dsun.java2d.noddraw=true else DirectDraw will mess with OpenGL and the display will remain black in fullscreen.
+On Linux, using a JRE7u25+, you may encounter the message "libNativeFmodEx64.so: undefined symbol: FMOD_System_Create". This is due to secuirty changes brought to that version of Java.
 
 
 Keys:
-  F1: switch between full screen and windowed mode
+  F1: switch between full screen and windowed mode (not available in Applet mode)
   Space: pause/resume
   F: write framerate to the standard output
   Escape: exit  

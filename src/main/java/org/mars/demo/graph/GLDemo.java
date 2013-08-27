@@ -9,7 +9,6 @@
 package org.mars.demo.graph;
 
 import java.awt.Color;
-import java.awt.Component;
 import java.awt.Frame;
 import java.awt.Graphics;
 import java.awt.KeyEventDispatcher;
@@ -22,12 +21,11 @@ import java.awt.event.WindowListener;
 import javax.media.opengl.GL2;
 import javax.media.opengl.GLAutoDrawable;
 import javax.media.opengl.GLEventListener;
-import javax.media.opengl.awt.GLCanvas;
 import javax.media.opengl.glu.gl2.GLUgl2;
-import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.SwingUtilities;
 
+import org.mars.toolkit.realtime.graph.DrawableHolder;
 import org.mars.toolkit.realtime.graph.FrameInfo;
 import org.mars.toolkit.realtime.graph.FrameRate;
 import org.mars.toolkit.realtime.graph.GraphUtils;
@@ -35,8 +33,7 @@ import org.mars.toolkit.time.Timer;
 
 public abstract class GLDemo extends GLBase implements GLEventListener, WindowListener, KeyEventDispatcher {
 
-  private GLFrame frame;
-
+  private DrawableHolder drawableHolder;
   private boolean active;
   private Timer timer;
   private int frameCount;
@@ -51,12 +48,12 @@ public abstract class GLDemo extends GLBase implements GLEventListener, WindowLi
     timer = new Timer();
   }
 
-  public final GLFrame getFrame() {
-    return frame;
+  public final DrawableHolder getDrawableHolder() {
+    return drawableHolder;
   }
 
   public final FrameInfo getFrameInfo() {
-    return frame.getFrameInfo();
+    return drawableHolder.getFrameInfo();
   }
 
   public final boolean isActive() {
@@ -109,12 +106,13 @@ public abstract class GLDemo extends GLBase implements GLEventListener, WindowLi
       }
 
       try {
-        openWindow(fi);
+        drawableHolder = openWindow(fi);
         initSound();
         setInitialized();
       }
       catch(Exception e) {
         setInterrupted();
+        active = false;
         closeWindow();
         disposeSound();
         throw new RuntimeException(e);
@@ -134,13 +132,14 @@ public abstract class GLDemo extends GLBase implements GLEventListener, WindowLi
 
       while (!isInterrupted()) {
         if (active) {
-          frame.getDrawable().display();
+          drawableHolder.display();
         }
       }
 
       stopSound();
     }
 
+    active = false;
     disposeSound();
     closeWindow();
   }
@@ -161,28 +160,20 @@ public abstract class GLDemo extends GLBase implements GLEventListener, WindowLi
 
   // ==============================================================================
 
-  protected final void openWindow(FrameInfo fi) throws Exception {
-    GLCanvas canvas = GLToolkit.makeGLCanvas(this);
-    frame = new GLFrame(fi, canvas);
-    frame.applyFrameInfo();
-    frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-    frame.setVisible(true);
-    frame.addWindowListener(this);
-  }
-
-  protected final void closeWindow() {
-    active = false;
-    if(frame != null) {
-      frame.setVisible(false);
-      frame.dispose();
-      frame = null;
+  protected abstract DrawableHolder openWindow(FrameInfo fi) throws Exception;
+  
+  protected void closeWindow() {
+    if(drawableHolder != null) {
+      drawableHolder.close();
+      drawableHolder = null;
     }
   }
 
   protected final void switchFullScreen() {
-    FrameInfo frameInfo = frame.getFrameInfo(); // get the frameinfo before the frame is destroyed
+    FrameInfo frameInfo = drawableHolder.getFrameInfo(); // get the frameinfo before the frame is destroyed
 
     boolean saveActive = active; // saving previous active state (in cas of pause or window reduction)
+    active = false;
     pauseSound();
     closeWindow(); // kill current window
 
@@ -190,7 +181,7 @@ public abstract class GLDemo extends GLBase implements GLEventListener, WindowLi
 
     // recreate openGL window
     try {
-      openWindow(frameInfo);
+      drawableHolder = openWindow(frameInfo);
       active = saveActive; // restart display
       pauseSound();
     }
@@ -273,11 +264,11 @@ public abstract class GLDemo extends GLBase implements GLEventListener, WindowLi
       h = 1;
     }
 
-    FrameInfo frameInfo = frame.getFrameInfo();
-    frameInfo.setCanvasSize(w, h);
+    FrameInfo frameInfo = drawableHolder.getFrameInfo();
+    frameInfo.setDrawableSize(w, h);
 
     if (!frameInfo.isFullScreen()) {
-      frameInfo.setWindowSize(frame.getSize());
+      frameInfo.setWindowSize(drawableHolder.getSize());
     }
 
     try {
@@ -317,9 +308,8 @@ public abstract class GLDemo extends GLBase implements GLEventListener, WindowLi
       else if (code == getKeyPause()) {
         pause();
 
-        Graphics graphics = ((Component)frame.getDrawable()).getGraphics();
+        Graphics graphics = (drawableHolder.getDrawable()).getGraphics();
         SwingUtilities.invokeLater(new PausePrinter(graphics));
-
       }
       else if (code == getKeyFrameRate()) {
         frameRate.setActive(!frameRate.isActive());
@@ -395,7 +385,7 @@ public abstract class GLDemo extends GLBase implements GLEventListener, WindowLi
     
     @Override
     public void run() {
-      GraphUtils.printMessage(graphics, "PAUSED", GraphUtils.getDefaultFont(), Color.gray, Color.lightGray, 20, 20, true); //FIXME doesn't display in fullscreen and doen't use trasnaprency in windowed mode
+      GraphUtils.printMessage(graphics, "PAUSED", GraphUtils.getDefaultFont(), Color.gray, Color.lightGray, 20, 20, true); //FIXME doesn't always display in fullscreen and doesn't use trasnaprency in windowed mode
     }
   }
 }

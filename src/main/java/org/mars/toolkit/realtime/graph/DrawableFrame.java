@@ -16,7 +16,7 @@ import java.awt.image.BufferedImage;
 
 import javax.swing.JFrame;
 
-public class CanvasFrame extends JFrame {
+public abstract class DrawableFrame extends JFrame implements DrawableHolder {
   private static final long serialVersionUID = -3656505155924146982L;
   private FrameInfo frameInfo;
   private Cursor savedCursor;
@@ -33,27 +33,27 @@ public class CanvasFrame extends JFrame {
    * 
    * @param frameInfo
    */
-  public CanvasFrame(FrameInfo frameInfo) {
+  public DrawableFrame(FrameInfo frameInfo) {
     super();
     this.frameInfo = frameInfo;
   }
 
-  public final Dimension getCanvasSize() {
+  public final Dimension getDrawableSize() {
     if (frameInfo != null) {
-      return frameInfo.getCanvasSize();
+      return frameInfo.getDrawableSize();
     }
     else {
       return null;
     }
   }
 
-  public final void setCanvasSize(Dimension dim) {
-    setCanvasSize(dim.width, dim.height);
+  public final void setDrawableSize(Dimension dim) {
+    setDrawableSize(dim.width, dim.height);
   }
 
-  public final void setCanvasSize(int width, int height) {
+  public final void setDrawableSize(int width, int height) {
     if (frameInfo != null) {
-      frameInfo.setCanvasSize(width, height);
+      frameInfo.setDrawableSize(width, height);
 
       if (!frameInfo.isFullScreen()) {
         frameInfo.setWindowSize(getSize());
@@ -61,12 +61,9 @@ public class CanvasFrame extends JFrame {
     }
   }
 
+  @Override
   public final FrameInfo getFrameInfo() {
     return frameInfo;
-  }
-
-  public void setFrameInfo(FrameInfo frameInfo) {
-    this.frameInfo = frameInfo;
   }
 
   public final void applyFrameInfo() {

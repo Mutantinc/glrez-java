@@ -60,7 +60,7 @@ public class Rez extends Geometry {
     gl.glNewList(r_d2, GL2.GL_COMPILE);
     gl.glTranslatef(-10.0f, 0.0f, 0.0f);
 
-    gl.glBegin(GL2.GL_QUADS);
+    gl.glBegin(GL2GL3.GL_QUADS);
     gl.glVertex3f(0.0f, 0.0f, d);
     gl.glVertex3f(4.0f, 0.0f, d);
     gl.glVertex3f(4.0f, 0.0f, -d);
@@ -71,7 +71,7 @@ public class Rez extends Geometry {
     gl.glVertex3f(1.0f, -2.0f, -d);
     gl.glEnd();
 
-    gl.glBegin(GL2.GL_QUADS);
+    gl.glBegin(GL2GL3.GL_QUADS);
     gl.glVertex3f(3.0f, -3.0f, d);
     gl.glVertex3f(4.0f, -5.0f, d);
     gl.glVertex3f(4.0f, -5.0f, -d);
@@ -80,7 +80,7 @@ public class Rez extends Geometry {
 
     gl.glTranslatef(5.0f, 0.0f, 0.0f);
 
-    gl.glBegin(GL2.GL_QUADS);
+    gl.glBegin(GL2GL3.GL_QUADS);
     gl.glVertex3f(0.0f, 0.0f, d);
     gl.glVertex3f(4.0f, 0.0f, d);
     gl.glVertex3f(4.0f, 0.0f, -d);
@@ -97,7 +97,7 @@ public class Rez extends Geometry {
 
     gl.glTranslatef(5.0f, 0.0f, 0.0f);
 
-    gl.glBegin(GL2.GL_QUADS);
+    gl.glBegin(GL2GL3.GL_QUADS);
     gl.glVertex3f(0.0f, 0.0f, d);
     gl.glVertex3f(4.0f, 0.0f, d);
     gl.glVertex3f(4.0f, 0.0f, -d);
@@ -114,7 +114,7 @@ public class Rez extends Geometry {
     gl.glNewList(r_d3, GL2.GL_COMPILE);
     gl.glTranslatef(-10.0f, 0.0f, 0.0f);
 
-    gl.glBegin(GL2.GL_QUADS);
+    gl.glBegin(GL2GL3.GL_QUADS);
     gl.glVertex3f(4.0f, -3.0f, d);
     gl.glVertex3f(3.0f, -3.0f, d);
     gl.glVertex3f(3.0f, -3.0f, -d);
@@ -137,7 +137,7 @@ public class Rez extends Geometry {
     gl.glVertex3f(3.0f, -1.0f, -d);
     gl.glEnd();
 
-    gl.glBegin(GL2.GL_QUADS);
+    gl.glBegin(GL2GL3.GL_QUADS);
     gl.glVertex3f(2.0f, -3.0f, d);
     gl.glVertex3f(2.0f, -3.0f, d);
     gl.glVertex3f(3.0f, -5.0f, -d);
@@ -146,7 +146,7 @@ public class Rez extends Geometry {
 
     gl.glTranslatef(5.0f, 0.0f, 0.0f);
 
-    gl.glBegin(GL2.GL_QUADS);
+    gl.glBegin(GL2GL3.GL_QUADS);
     gl.glVertex3f(4.0f, -3.0f, d);
     gl.glVertex3f(1.0f, -3.0f, d);
     gl.glVertex3f(1.0f, -3.0f, -d);
@@ -163,7 +163,7 @@ public class Rez extends Geometry {
 
     gl.glTranslatef(5.0f, 0.0f, 0.0f);
 
-    gl.glBegin(GL2.GL_QUADS);
+    gl.glBegin(GL2GL3.GL_QUADS);
     gl.glVertex3f(4.0f, -5.0f, d);
     gl.glVertex3f(0.0f, -5.0f, d);
     gl.glVertex3f(0.0f, -5.0f, -d);
@@ -174,7 +174,7 @@ public class Rez extends Geometry {
     gl.glVertex3f(2.75f, -1.0f, -d);
     gl.glEnd();
 
-    gl.glBegin(GL2.GL_QUADS);
+    gl.glBegin(GL2GL3.GL_QUADS);
     gl.glVertex3f(4.0f, -1.0f, d);
     gl.glVertex3f(1.25f, -4.0f, d);
     gl.glVertex3f(1.25f, -4.0f, -d);
@@ -187,7 +187,7 @@ public class Rez extends Geometry {
     gl.glNewList(r_d4, GL2.GL_COMPILE);
     gl.glTranslatef(-10.0f, 0.0f, 0.0f);
 
-    gl.glBegin(GL2.GL_QUADS);
+    gl.glBegin(GL2GL3.GL_QUADS);
     gl.glVertex3f(4.0f, 0.0f, d);
     gl.glVertex3f(4.0f, -3.0f, d);
     gl.glVertex3f(4.0f, -3.0f, -d);
@@ -204,7 +204,7 @@ public class Rez extends Geometry {
 
     gl.glTranslatef(5.0f, 0.0f, 0.0f);
 
-    gl.glBegin(GL2.GL_QUADS);
+    gl.glBegin(GL2GL3.GL_QUADS);
     gl.glVertex3f(4.0f, 0.0f, d);
     gl.glVertex3f(4.0f, -3.0f, d);
     gl.glVertex3f(4.0f, -3.0f, -d);
@@ -225,7 +225,7 @@ public class Rez extends Geometry {
 
     gl.glTranslatef(5.0f, 0.0f, 0.0f);
 
-    gl.glBegin(GL2.GL_QUADS);
+    gl.glBegin(GL2GL3.GL_QUADS);
     gl.glVertex3f(4.0f, 0.0f, d);
     gl.glVertex3f(4.0f, -1.0f, d);
     gl.glVertex3f(4.0f, -1.0f, -d);
@@ -242,7 +242,7 @@ public class Rez extends Geometry {
     gl.glNewList(r_d5, GL2.GL_COMPILE);
     gl.glTranslatef(-10.0f, 0.0f, 0.0f);
 
-    gl.glBegin(GL2.GL_QUADS);
+    gl.glBegin(GL2GL3.GL_QUADS);
     gl.glVertex3f(0.0f, -5.0f, d);
     gl.glVertex3f(0.0f, 0.0f, d);
     gl.glVertex3f(0.0f, 0.0f, -d);
@@ -255,7 +255,7 @@ public class Rez extends Geometry {
 
     gl.glTranslatef(5.0f, 0.0f, 0.0f);
 
-    gl.glBegin(GL2.GL_QUADS);
+    gl.glBegin(GL2GL3.GL_QUADS);
     gl.glVertex3f(0.0f, -5.0f, d);
     gl.glVertex3f(0.0f, 0.0f, d);
     gl.glVertex3f(0.0f, 0.0f, -d);
@@ -268,7 +268,7 @@ public class Rez extends Geometry {
 
     gl.glTranslatef(5.0f, 0.0f, 0.0f);
 
-    gl.glBegin(GL2.GL_QUADS);
+    gl.glBegin(GL2GL3.GL_QUADS);
     gl.glVertex3f(0.0f, -5.0f, d);
     gl.glVertex3f(0.0f, -4.0f, d);
     gl.glVertex3f(0.0f, -4.0f, -d);
@@ -279,7 +279,7 @@ public class Rez extends Geometry {
     gl.glVertex3f(0.0f, -1.0f, -d);
     gl.glEnd();
 
-    gl.glBegin(GL2.GL_QUADS);
+    gl.glBegin(GL2GL3.GL_QUADS);
     gl.glVertex3f(0.0f, -4.0f, d);
     gl.glVertex3f(2.75f, -1.0f, d);
     gl.glVertex3f(2.75f, -1.0f, -d);
@@ -297,7 +297,7 @@ public class Rez extends Geometry {
   private void genRezR(float d) {
     GL2 gl = demo.getGL();
 
-    gl.glBegin(GL2.GL_QUADS);
+    gl.glBegin(GL2GL3.GL_QUADS);
     gl.glVertex3f(0.0f, 0.0f, d);
     gl.glVertex3f(4.0f, 0.0f, d);
     gl.glVertex3f(3.0f, -1.0f, d);
@@ -328,7 +328,7 @@ public class Rez extends Geometry {
   private void genRezE(float d) {
     GL2 gl = demo.getGL();
 
-    gl.glBegin(GL2.GL_QUADS);
+    gl.glBegin(GL2GL3.GL_QUADS);
     gl.glVertex3f(0.0f, 0.0f, d);
     gl.glVertex3f(4.0f, 0.0f, d);
     gl.glVertex3f(3.0f, -1.0f, d);
@@ -359,7 +359,7 @@ public class Rez extends Geometry {
   private void genRezZ(float d) {
     GL2 gl = demo.getGL();
 
-    gl.glBegin(GL2.GL_QUADS);
+    gl.glBegin(GL2GL3.GL_QUADS);
     gl.glVertex3f(0.0f, -0.0f, d);
     gl.glVertex3f(4.0f, -0.0f, d);
     gl.glVertex3f(4.0f, -1.0f, d);

@@ -20,7 +20,7 @@ public class DisplayModeListCellRenderer extends DefaultListCellRenderer {
   private static final long serialVersionUID = 1601887479950908257L;
 
   @Override
-  public Component getListCellRendererComponent(JList list, Object value, int index, boolean isSelected, boolean cellHasFocus) {
+  public Component getListCellRendererComponent(JList<?> list, Object value, int index, boolean isSelected, boolean cellHasFocus) {
     if (value instanceof DisplayMode) {
       value = FrameInfo.toString((DisplayMode) value);
     }

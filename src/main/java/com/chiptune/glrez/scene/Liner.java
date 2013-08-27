@@ -15,6 +15,7 @@ package com.chiptune.glrez.scene;
 
 import javax.media.opengl.GL;
 import javax.media.opengl.GL2;
+import javax.media.opengl.GL2GL3;
 
 import org.mars.demo.graph.GLDemo;
 
@@ -109,7 +110,7 @@ public class Liner extends Geometry {
 
           ColorUtils.calcRGBA(gl, (int) (144 + 112 * Math.cos((24.0 * t_g * 8.0 + l_i * 1.5) * PID)), 144, (int) (144 + 112 * Math.sin((24.0 * t_g * 8.0 + l_i * 1.5) * PID)), 1.0f);
           
-          gl.glBegin(GL2.GL_QUADS);
+          gl.glBegin(GL2GL3.GL_QUADS);
           gl.glTexCoord2fv(Resources.texFont.img2Tex(l_w + ox1, l_h + oy1), 0);
           gl.glVertex3f(-l_s, l_s, l_s / 2.f);
           gl.glTexCoord2fv(Resources.texFont.img2Tex(l_w + ox2, l_h + oy1), 0);

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<jnlp spec="1.0+" codebase="http://www.chiptune.com/glrez/" href="glrez.jnlp">
+<jnlp spec="1.0+" codebase="http://www.chiptune.com/glrez/" href="glrez-applet.jnlp">
     <information>
         <title>GLRez</title>
         <vendor>Rez</vendor>
@@ -27,5 +27,11 @@
         <extension name="NativeFmodEx" href="http://jerome.jouvie.free.fr/jws/NativeFmodEx.jnlp.php" />
     </resources>
 
-    <application-desc main-class="com.chiptune.glrez.Launcher"/>
+    <applet-desc
+    	name="GLRez"
+    	main-class="com.chiptune.glrez.Applet"
+    	width="800"
+    	height="600">
+    </applet-desc>
+ </applet-desc
 </jnlp>

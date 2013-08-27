@@ -208,7 +208,7 @@ public final class GLTextureLoader {
       gl.glBindTexture(GL.GL_TEXTURE_2D, id);
       gl.glTranslatef(origX, origY, 0.0f);
 
-      gl.glBegin(GL2.GL_QUADS);
+      gl.glBegin(GL2GL3.GL_QUADS);
       gl.glTexCoord2f(0.0f, 0.0f);
       gl.glVertex3f(0.0f, 0.0f, 0.0f);
       gl.glTexCoord2f(0.0f, 1.0f);

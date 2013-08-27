@@ -1,17 +1,3 @@
-/*
-/**
-* Copyright 2005-2012 <a href="mailto:fabmars@gmail.com">Fabien Marsaud</a> and <a href="mailto:rez@chiptune.com">Christophe Résigné</a>
-* 
-* Java port of the GLRez intro released at the Breakpoint 2005
-* @see http://www.pouet.net/prod.php?which=16327
-* @see http://www.chiptune.com
-* 
-* Original C source code on GitHub
-* @see https://github.com/chiptune/glrez
-* 
-* This software is distributed on an "AS IS" BASIS,
-* WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-*/
 package com.chiptune.glrez;
 
 import java.awt.Color;
@@ -21,9 +7,9 @@ import javax.media.opengl.GL;
 import javax.media.opengl.GL2;
 import javax.media.opengl.GL2ES1;
 import javax.media.opengl.fixedfunc.GLLightingFunc;
+import javax.swing.JOptionPane;
 
 import org.mars.demo.graph.GLDemo;
-import org.mars.demo.sound.FmodPlayer;
 import org.mars.toolkit.realtime.graph.FrameInfo;
 import org.mars.toolkit.realtime.sound.ModulePlayer;
 
@@ -32,14 +18,15 @@ import com.chiptune.glrez.scene.Scene;
 import com.chiptune.glrez.scene.Zoom;
 
 
-public class GLRez extends GLDemo {
+public abstract class GLRezHeadless extends GLDemo implements Runnable {
 
-  private final static boolean SNG = true; // music flag
-  private final static boolean MORE_KEYS = false; // cheatmode keys
+  private final boolean SNG = true; // music flag
+  private final boolean MORE_KEYS = false; // cheatmode keys
 
   private TickTimer tickTimer;
   private ModulePlayer modPlayer;
   private Scene scene;
+  private boolean firstDraw = true; //Sometimes the module has played more than one row before the display kicks-in, so this fixes display errors on the first effect
 
   private float f_t1; // synchro time 1
   private float f_t2; // synchro time 2
@@ -52,11 +39,11 @@ public class GLRez extends GLDemo {
   /* color variable */
   //private float m_r; // repeat ratio (unused in the C version)
 
-  public GLRez() {
+  public GLRezHeadless() {
     // nothing
   }
   
-  public GLRez(FrameInfo fi, ModulePlayer mp) {
+  public GLRezHeadless(FrameInfo fi, ModulePlayer mp) {
     init(fi, mp);
   }
   
@@ -96,62 +83,67 @@ public class GLRez extends GLDemo {
     init(fi);
   }
   
+  protected boolean isSoundEnabled() {
+    return SNG && (modPlayer != null);
+  }
+  
   @Override
   protected void initSound() throws Exception{
-    if(SNG) {
+    if(isSoundEnabled()) {
       modPlayer.init();
     }
   }
   
   @Override
   protected void loadSound() {
-    if(SNG) {
+    if(isSoundEnabled()) {
       modPlayer.load(Resources.modUrl);
     }
   }
 
   @Override
   protected void startSound() {
-    if(SNG) {
+    if(isSoundEnabled()) {
       modPlayer.start();
     }
   }
 
   @Override
   protected void stopSound() {
-    if(SNG) {
+    if(isSoundEnabled()) {
       modPlayer.stop();
     }
   }
 
   @Override
   protected void disposeSound() {
-    if(SNG) {
+    if(isSoundEnabled()) {
       modPlayer.dispose();
     }
   }
 
   @Override
   protected void pauseSound() {
-    if(SNG) {
+    if(isSoundEnabled()) {
       modPlayer.pause();
     }
   }
 
   @Override
-  protected void drawGLScene()
-  {
+  protected void drawGLScene() {
     float t_g = tickTimer.getTime();
 
     // synchro
-    if (SNG) {
+    if(isSoundEnabled()) {
       modPlayer.stream();
       //System.out.println(modPlayer);
       
       int ord = modPlayer.getOrd();
       int row = modPlayer.getRow();
 
-      if (row == 0) {
+      if (row == 0 || firstDraw) {
+        firstDraw = false;
+        
         switch (ord) {
         case 0:
           if (!scene.getMapping().isEnabled()) {
@@ -240,33 +232,26 @@ public class GLRez extends GLDemo {
       float t_g = tickTimer.getTime();
 
       if (MORE_KEYS) {
-        if (code == KeyEvent.VK_F2) // F2 pressed ?
-        {
+        if (code == KeyEvent.VK_F2) { // F2 pressed ?
           scene.getRez().toggle(); // toggle on/off REZ
         }
-        else if (code == KeyEvent.VK_F3) // F3 pressed ?
-        {
+        else if (code == KeyEvent.VK_F3) { // F3 pressed ?
           scene.getParticles().toggle(); // toggle on/off particles
         }
-        else if (code == KeyEvent.VK_F4) // F4 pressed ?
-        {
+        else if (code == KeyEvent.VK_F4) { // F4 pressed ?
           scene.getGlenz().toggle(); // toggle on/off glenz
         }
-        else if (code == KeyEvent.VK_F5) // F5 pressed ?
-        {
+        else if (code == KeyEvent.VK_F5) { // F5 pressed ?
           scene.getLiner().toggle(); // toggle on/off liner
         }
-        else if (code == KeyEvent.VK_F6) // F6 pressed ?
-        {
+        else if (code == KeyEvent.VK_F6) { // F6 pressed ?
           scene.getTitle().toggle(); // toggle on/off title
         }
-        else if (code == KeyEvent.VK_F7) // F7 pressed ?
-        {
+        else if (code == KeyEvent.VK_F7) { // F7 pressed ?
           scene.getMapping().toggle(); // toggle on/off mapping
           scene.getMapping().setSynchroTime(t_g);
         }
-        else if (code == KeyEvent.VK_SPACE) // space pressed ?
-        {
+        else if (code == KeyEvent.VK_SPACE) { // space pressed ?
           scene.getCube().setJumpAngle(0.0f);
           scene.getCube().setJump(0.5f);
           scene.getCube().setSynchroTime(t_g);
@@ -274,8 +259,7 @@ public class GLRez extends GLDemo {
           f_v2 = f_n;
           f_t2 = t_g;
         }
-        else if (code == KeyEvent.VK_ENTER) // return pressed ?
-        {
+        else if (code == KeyEvent.VK_ENTER) { // return pressed ?
           scene.getJump().setEnabled(true); // move cube and title
           f_n = 0.5f;
           f_v1 = f_n;
@@ -284,8 +268,7 @@ public class GLRez extends GLDemo {
           scene.getJump().setJumpY(3.85f);
           scene.getJump().setSynchroTime(t_g);
         }
-        else if (code == KeyEvent.VK_TAB) // tab pressed ?
-        {
+        else if (code == KeyEvent.VK_TAB) { // tab pressed ?
           Zoom zoom = scene.getZoom();
           zoom.setEnabled(true); // move scene
           zoom.setZoom(10.0f);
@@ -301,16 +284,21 @@ public class GLRez extends GLDemo {
     return true;
   }
   
-
-  public static void main(String... args) {
+  /**
+   * Is able to start in a separate thread in cases there would be locking issues with Swing
+   */
+  @Override
+  public void run() {
     try {
-      FrameInfo fi = new FrameInfo.Windowed("GLREZ", Resources.readIcon(), 800, 600, false);
-      ModulePlayer mp = new FmodPlayer();      
-      new GLRez(fi, mp).start();
+      start();
     }
     catch (Throwable t) {
       t.printStackTrace();
-    }    
+      String msg = t.getMessage();
+      if(msg == null || msg.length() == 0) {
+        msg = t.getClass().getSimpleName();
+      }
+      JOptionPane.showMessageDialog(null, msg, "Oops!", JOptionPane.ERROR_MESSAGE);
+    }
   }
 }
-//Rez' asshole is here

@@ -111,7 +111,7 @@ public class Cube extends Geometry implements Synchronizable {
   protected void cubeSide(float d, float x, float y, float c, float s) {
     GL2 gl = demo.getGL();
 
-    gl.glBegin(GL2.GL_QUADS);
+    gl.glBegin(GL2GL3.GL_QUADS);
     gl.glNormal3f(0.0f, 0.0f, -1.0f);
     gl.glTexCoord2f(x + c, y - s);
     gl.glVertex3f(-d, d, d);
