@@ -145,11 +145,12 @@ public class OptionsDialog extends JDialog {
       }
     }
     
-    boolean fullScreen = true;
     displayModeInfo.addChoiceListener(displayModeChoiceListener);
     displayModeInfo.addSelectionListener(displayModesComboBox);
-    displayModesComboBox.selectDefaultModes(fullScreen);
+    boolean fullScreen = displayModeInfo.isFullScreenSupported();
+    displayModesComboBox.selectDefaultModes(fullScreen); //this triggers the listeners above, so keep it under.
     fullScreenCheckBox.setSelected(fullScreen);
+    fullScreenCheckBox.setEnabled(fullScreen);
     
     fmodButton.setSelected(true);
     setResizable(false);

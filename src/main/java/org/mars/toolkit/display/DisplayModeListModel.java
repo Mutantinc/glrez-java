@@ -14,7 +14,7 @@ import java.util.List;
 import javax.swing.ComboBoxModel;
 import javax.swing.event.ListDataListener;
 
-public class DisplayModeListModel implements ComboBoxModel {
+public class DisplayModeListModel implements ComboBoxModel<Object> {
   private List<?> list;
   private Object selectedItem;
 

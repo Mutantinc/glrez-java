@@ -17,7 +17,7 @@ import javax.swing.JComboBox;
 
 import org.mars.toolkit.realtime.graph.FrameInfo;
 
-public final class DisplayModeComboBox extends JComboBox implements DisplayModeSelectionListener {
+public final class DisplayModeComboBox extends JComboBox<Object> implements DisplayModeSelectionListener {
   private static final long serialVersionUID = 8706710284108590900L;
 
   private final DisplayModeInfo displayModeInfo;
@@ -126,15 +126,17 @@ public final class DisplayModeComboBox extends JComboBox implements DisplayModeS
     fullScreenSelected(fullScreen);
 
     if (displayModeInfo != null) {
-      displayModeInfo.setFullScreenSelected(true); // to stay consistent vs listeners
-      DisplayMode currentDisplayMode = displayModeInfo.getGraphicsDevice().getDisplayMode();
-      DisplayMode[] displayModes = displayModeInfo.getDisplayModes();
-      if (displayModes != null && displayModes.length > 0) {
-        if(Arrays.asList(displayModes).contains(currentDisplayMode)) {
-          displayModeSelected(currentDisplayMode);
-        }
-        else {
-          displayModeSelected(displayModes[displayModes.length - 1]);
+      if(displayModeInfo.isFullScreenSupported()) {
+        displayModeInfo.setFullScreenSelected(true); // to stay consistent vs listeners
+        DisplayMode currentDisplayMode = displayModeInfo.getGraphicsDevice().getDisplayMode();
+        DisplayMode[] displayModes = displayModeInfo.getDisplayModes();
+        if (displayModes != null && displayModes.length > 0) {
+          if(Arrays.asList(displayModes).contains(currentDisplayMode)) {
+            displayModeSelected(currentDisplayMode);
+          }
+          else {
+            displayModeSelected(displayModes[displayModes.length - 1]);
+          }
         }
       }
 

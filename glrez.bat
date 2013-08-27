@@ -1,1 +1,1 @@
-start javaw.exe -Dsun.java2d.noddraw=true -jar glrez-1.0.jar
+start javaw.exe -Dsun.java2d.noddraw=true -jar glrez-1.0.1.jar

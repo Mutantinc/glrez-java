@@ -14,8 +14,6 @@
 */
 package com.chiptune.glrez;
 
-import javax.swing.JOptionPane;
-
 import org.mars.demo.sound.FmodPlayer;
 import org.mars.demo.sound.JoalPlayer;
 import org.mars.toolkit.display.DisplayModeChoiceListener;
@@ -28,9 +26,6 @@ import com.chiptune.glrez.data.Resources;
 public final class Launcher extends Thread implements DisplayModeChoiceListener {
 
   private final OptionsDialog options;
-  private FrameInfo fi;
-  private ModulePlayer mp;
-
   
   protected Launcher() {
     options = new OptionsDialog(this);
@@ -43,27 +38,12 @@ public final class Launcher extends Thread implements DisplayModeChoiceListener 
       fi.setTitle("GLREZ");
       fi.setIcon(Resources.readIcon());
       
-      this.fi = fi;
-      this.mp = options.isFmodSelected() ? new FmodPlayer() : new JoalPlayer();
-      start(); //starting in a separate thread to avoid locking issues with Swing
+      ModulePlayer mp = options.isFmodSelected() ? new FmodPlayer() : new JoalPlayer();
+      GLRezFrame glRez = new GLRezFrame(fi, mp);
+      new Thread(glRez).start();
     }
   }
 
-  @Override
-  public void run() {
-    try {
-      new GLRez(fi, mp).start();
-    }
-    catch (Throwable t) {
-      t.printStackTrace();
-      String msg = t.getMessage();
-      if(msg == null || msg.length() == 0) {
-        msg = t.getClass().getSimpleName();
-      }
-      JOptionPane.showMessageDialog(null, msg, "Oops!", JOptionPane.ERROR_MESSAGE);
-    }
-  }
-  
   public static void main(String... args) {
     new Launcher();
   }

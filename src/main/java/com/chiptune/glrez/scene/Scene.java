@@ -20,6 +20,7 @@ import java.io.IOException;
 import javax.media.opengl.GL;
 import javax.media.opengl.GL2;
 import javax.media.opengl.GL2ES1;
+import javax.media.opengl.GL2GL3;
 import javax.media.opengl.fixedfunc.GLLightingFunc;
 import javax.media.opengl.fixedfunc.GLMatrixFunc;
 import javax.media.opengl.glu.gl2.GLUgl2;
@@ -142,7 +143,7 @@ public class Scene {
   }
 
   public void init2D() {
-    Dimension size = demo.getFrameInfo().getCanvasSize();
+    Dimension size = demo.getFrameInfo().getDrawableSize();
     GL2 gl = demo.getGL();
     GLUgl2 glu = demo.getGLU();
 
@@ -155,7 +156,7 @@ public class Scene {
   }
 
   public void init3D() {
-    Dimension size = demo.getFrameInfo().getCanvasSize();
+    Dimension size = demo.getFrameInfo().getDrawableSize();
     GL2 gl = demo.getGL();
     GLUgl2 glu = demo.getGLU();
 
@@ -279,7 +280,7 @@ public class Scene {
   }
 
   private void drawAlphaMask() {
-    Dimension size = demo.getFrameInfo().getCanvasSize();
+    Dimension size = demo.getFrameInfo().getDrawableSize();
     GL2 gl = demo.getGL();
 
     // draw 2d
@@ -300,7 +301,7 @@ public class Scene {
     final int height = blockSize * hBlocks;
 
     ColorUtils.calcRGBA(gl, 255, 255, 255, 0.75f);
-    gl.glBegin(GL2.GL_QUADS);
+    gl.glBegin(GL2GL3.GL_QUADS);
     gl.glTexCoord2f(0.0f, 0.0f);
     gl.glVertex2i(0, hBorder);
     gl.glTexCoord2f(wTex, 0.0f);
@@ -314,7 +315,7 @@ public class Scene {
     //borders
     for (int i = 0; i < borderBlocks; i++) {
       ColorUtils.calcRGBA(gl, 255, 255, 255, (float) (0.75 - 0.75 / borderBlocks * i));
-      gl.glBegin(GL2.GL_QUADS);
+      gl.glBegin(GL2GL3.GL_QUADS);
       gl.glTexCoord2f(0.0f, 0.0f);
       gl.glVertex2i(0, hBorder - (i+1) * blockSize);
       gl.glTexCoord2f(wTex, 0.0f);
@@ -325,7 +326,7 @@ public class Scene {
       gl.glVertex2i(0, hBorder - i * blockSize);
       gl.glEnd();
       
-      gl.glBegin(GL2.GL_QUADS);
+      gl.glBegin(GL2GL3.GL_QUADS);
       gl.glTexCoord2f(0.0f, 0.0f);
       gl.glVertex2i(0, height - hBorder + i * blockSize);
       gl.glTexCoord2f(wTex, 0.0f);
@@ -375,10 +376,10 @@ public class Scene {
   }
 
   private void drawBackground() {
-    Dimension size = demo.getFrameInfo().getCanvasSize();
+    Dimension size = demo.getFrameInfo().getDrawableSize();
     GL2 gl = demo.getGL();
     
-    gl.glBegin(GL2.GL_QUADS);
+    gl.glBegin(GL2GL3.GL_QUADS);
     gl.glTexCoord2f(0.0f, 1.0f);
     gl.glVertex2i(0, 0);
     gl.glTexCoord2f(1.0f, 1.0f);

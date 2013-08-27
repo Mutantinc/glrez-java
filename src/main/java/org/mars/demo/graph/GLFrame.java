@@ -9,15 +9,18 @@
 package org.mars.demo.graph;
 
 import java.awt.Component;
+import java.awt.event.WindowListener;
 
 import javax.media.opengl.GLAutoDrawable;
 import javax.media.opengl.GLEventListener;
+import javax.media.opengl.awt.GLCanvas;
+import javax.swing.JFrame;
 
-import org.mars.toolkit.realtime.graph.CanvasFrame;
+import org.mars.toolkit.realtime.graph.DrawableFrame;
 import org.mars.toolkit.realtime.graph.FrameInfo;
 
 
-public final class GLFrame extends CanvasFrame {
+public final class GLFrame extends DrawableFrame {
   private static final long serialVersionUID = -4295429455267636983L;
 
   private GLAutoDrawable drawable;
@@ -44,8 +47,30 @@ public final class GLFrame extends CanvasFrame {
     super.setVisible(visible);
   }
 
-  public final GLAutoDrawable getDrawable() {
-    return drawable;
+  
+  @Override
+  public Component getDrawable() {
+    return (Component)drawable;
   }
 
+  @Override
+  public void display() {
+    drawable.display();
+  }
+
+  public final static GLFrame openWindow(FrameInfo fi, GLEventListener glEventListener, WindowListener windowListener) throws Exception {
+    GLCanvas canvas = GLToolkit.makeGLCanvas(glEventListener);
+    GLFrame frame = new GLFrame(fi, canvas);
+    frame.applyFrameInfo();
+    frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+    frame.setVisible(true);
+    frame.addWindowListener(windowListener);
+    return frame;
+  }
+
+  @Override
+  public final void close() {
+    setVisible(false);
+    dispose();
+  }
 }

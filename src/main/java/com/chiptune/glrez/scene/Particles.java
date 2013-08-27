@@ -20,6 +20,7 @@ import java.util.List;
 
 import javax.media.opengl.GL;
 import javax.media.opengl.GL2;
+import javax.media.opengl.GL2GL3;
 
 import org.mars.demo.graph.GLDemo;
 
@@ -80,7 +81,7 @@ public class Particles extends Geometry implements Iterable<Particle> {
 
     r_d7 = gl.glGenLists(1);
     gl.glNewList(r_d7, GL2.GL_COMPILE);
-    gl.glBegin(GL2.GL_QUADS);
+    gl.glBegin(GL2GL3.GL_QUADS);
     gl.glTexCoord2f(a, b);
     gl.glVertex3f(-d, -d, 0.0f);
     gl.glTexCoord2f(b, b);

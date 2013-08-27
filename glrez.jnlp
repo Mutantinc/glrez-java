@@ -1,27 +1,29 @@
 <?xml version="1.0" encoding="utf-8"?>
-<jnlp spec="1.0+" codebase="http://www.suntriprecords.com/" href="temp/glrez.jnlp">
+<jnlp spec="1.0+" codebase="http://www.suntriprecords.com/temp/glrez/" href="glrez.jnlp">
     <information>
-        <title>GLREZ</title>
+        <title>GLRez</title>
         <vendor>Rez</vendor>
         <homepage href="http://www.chiptune.com/"/>
         <description>The first intro from Rez, hope you like the massive egotrip !</description>
         <offline-allowed/>
     </information>
 
-    <security>
-        <all-permissions/>
-    </security>
+	<security>
+		<all-permissions/>
+	</security>
+	
+	<update check="background" policy="always"/>
 
     <resources>
 		<j2se version="1.6+" java-vm-args="-Dsun.java2d.noddraw=true"/>
-		<jar href="temp/glrez-1.0.jar" main="true"/>
-		<!-- can't use http://micromod.googlecode.com/files/ibxm-a61.jar because it's not signed -->
-    </resources>
-
-    <resources>
-        <extension name="newt-all-awt" href="http://jogamp.org/deployment/jogamp-current/jogl-all-awt.jnlp" />
+		<jar href="glrez-1.0.1.jar" main="true"/>
+		<property name="sun.java2d.noddraw" value="true"/>
+	</resources>
+	<resources>
+        <extension name="jogl-all-awt" href="http://jogamp.org/deployment/jogamp-current/jogl-all-awt.jnlp" />
         <extension name="joal" href="http://jogamp.org/deployment/jogamp-current/joal.jnlp" />
-        <extension name="ibxm" href="temp/ibxm.jnlp" />
+		<!-- can't use http://micromod.googlecode.com/files/ibxm-a61.jar because it's not signed -->
+        <extension name="ibxm" href="ibxm.jnlp" />
         <extension name="NativeFmodEx" href="http://jerome.jouvie.free.fr/jws/NativeFmodEx.jnlp.php" />
     </resources>
 

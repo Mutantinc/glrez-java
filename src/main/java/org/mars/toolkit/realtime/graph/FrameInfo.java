@@ -21,7 +21,7 @@ public abstract class FrameInfo {
   private String title;
   private Image icon;
   private Dimension windowSize;
-  private Dimension canvasSize;
+  private Dimension drawableSize;
   private boolean fullScreen;
 
   public FrameInfo(String title) {
@@ -56,16 +56,16 @@ public abstract class FrameInfo {
     setWindowSize(windowSize.width, windowSize.height);
   }
 
-  public final Dimension getCanvasSize() {
-    return new Dimension(canvasSize);
+  public final Dimension getDrawableSize() {
+    return new Dimension(drawableSize);
   }
 
-  public final void setCanvasSize(Dimension canvasSize) {
-    this.canvasSize = new Dimension(canvasSize);
+  public final void setDrawableSize(Dimension drawableSize) {
+    this.drawableSize = new Dimension(drawableSize);
   }
 
-  public final void setCanvasSize(int width, int height) {
-    canvasSize = new Dimension(width, height);
+  public final void setDrawableSize(int width, int height) {
+    drawableSize = new Dimension(width, height);
   }
 
   public final boolean isFullScreen() {
@@ -80,7 +80,7 @@ public abstract class FrameInfo {
     fullScreen = !fullScreen;
     
     if(!fullScreen && windowSize == null) { //a FullScreen has no windowSize by default
-      windowSize = new Dimension(canvasSize);
+      windowSize = new Dimension(drawableSize);
     }
   }
 
@@ -105,8 +105,8 @@ public abstract class FrameInfo {
       ((Frame) window).setIconImage(icon);
     }
 
-    if (window instanceof CanvasFrame) {
-      ((CanvasFrame) window).showCursor(fullScreen);
+    if (window instanceof DrawableFrame) {
+      ((DrawableFrame) window).showCursor(fullScreen);
     }
   }
 
@@ -209,7 +209,7 @@ public abstract class FrameInfo {
     }
 
     /**
-     * Caution: mixing swing with heavyweight components on a Win32 system may cause nothing to be drawn on the canvas in fullscreen mode.
+     * Caution: mixing swing with heavyweight components on a Win32 system may cause nothing to be drawn on the canvas/drawable in fullscreen mode.
      * This is due to some interactions with DirectDraw. Disable it via the command-line -Dsun.java2d.noddraw=true
      */
     @Override

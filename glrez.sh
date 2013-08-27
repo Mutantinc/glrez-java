@@ -1,1 +1,1 @@
-java -jar glrez-1.0.jar
+java -jar glrez-1.0.1.jar
