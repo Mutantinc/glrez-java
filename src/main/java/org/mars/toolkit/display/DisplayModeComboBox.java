@@ -1,5 +1,5 @@
 /**
-* Copyright 2005-2012 <a href="mailto:fabmars@gmail.com">Fabien Marsaud</a>
+* Copyright 2005-2013 <a href="mailto:fabmars@gmail.com">Fabien Marsaud</a>
 *
 * Stripped version from the ToolAudioVisual project
 * 
@@ -18,7 +18,7 @@ import javax.swing.JComboBox;
 import org.mars.toolkit.realtime.graph.FrameInfo;
 
 public final class DisplayModeComboBox extends JComboBox<Object> implements DisplayModeSelectionListener {
-  private static final long serialVersionUID = 8706710284108590900L;
+  private static final long serialVersionUID = 1L;
 
   private final DisplayModeInfo displayModeInfo;
 
