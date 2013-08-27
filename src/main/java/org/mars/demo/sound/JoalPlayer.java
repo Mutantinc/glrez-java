@@ -126,6 +126,7 @@ public class JoalPlayer implements ModulePlayer {
     if(al != null) {
       al.alDeleteBuffers(buffers.length, buffers, 0);
       al.alDeleteSources(1, new int[]{source}, 0);
+      ALut.alutExit();
     }
   }
 
