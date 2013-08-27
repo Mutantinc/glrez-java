@@ -1,5 +1,5 @@
 /**
-* Copyright 2005-2012 <a href="mailto:fabmars@gmail.com">Fabien Marsaud</a>
+* Copyright 2005-2013 <a href="mailto:fabmars@gmail.com">Fabien Marsaud</a>
 *
 * Stripped version from the ToolAudioVisual project
 * 
@@ -17,7 +17,7 @@ import javax.swing.JList;
 import org.mars.toolkit.realtime.graph.FrameInfo;
 
 public class DisplayModeListCellRenderer extends DefaultListCellRenderer {
-  private static final long serialVersionUID = 1601887479950908257L;
+  private static final long serialVersionUID = 1L;
 
   @Override
   public Component getListCellRendererComponent(JList<?> list, Object value, int index, boolean isSelected, boolean cellHasFocus) {

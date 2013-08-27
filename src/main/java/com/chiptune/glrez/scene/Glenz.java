@@ -1,5 +1,5 @@
 /**
-* Copyright 2005-2012 <a href="mailto:fabmars@gmail.com">Fabien Marsaud</a> and <a href="mailto:rez@chiptune.com">Christophe Résigné</a>
+* Copyright 2005-2013 <a href="mailto:fabmars@gmail.com">Fabien Marsaud</a> and <a href="mailto:rez@chiptune.com">Christophe Résigné</a>
 * 
 * Java port of the GLRez intro released at the Breakpoint 2005
 * @see http://www.pouet.net/prod.php?which=16327
