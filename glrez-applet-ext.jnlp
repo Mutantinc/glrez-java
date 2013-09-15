@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<jnlp spec="1.0+" codebase="http://www.chiptune.com/glrez/" href="glrez-applet.jnlp">
+<jnlp spec="1.0+" codebase="http://www.chiptune.com/glrez/" href="glrez-applet-ext.jnlp">
     <information>
         <title>GLRez</title>
         <vendor>Rez</vendor>
@@ -29,7 +29,7 @@
 
     <applet-desc
     	name="GLRez"
-    	main-class="com.chiptune.glrez.Applet"
+    	main-class="com.chiptune.glrez.AppletExt"
     	width="640"
     	height="480">
     </applet-desc>
